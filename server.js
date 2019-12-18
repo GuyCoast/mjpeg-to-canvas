@@ -71,9 +71,10 @@ http.createServer(function(req, res) {
                 </body>\
               </html>');
              */
-    var filePath = '.' + req.url;
-    if (filePath == './')
+    var filePath = './public' + req.url;
+    if (filePath == './public/')
         filePath = './public/index.html';
+
 
      var extname = path.extname(filePath);
     var contentType = 'text/html';
