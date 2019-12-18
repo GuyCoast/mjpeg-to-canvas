@@ -62,7 +62,7 @@ var MJPEG = (function(module) {
     options.url = url;
     options.onFrame = updateFrame;
     options.onStart = function() { console.log("started"); }
-    options.onStop = function() { console.log("stopped"); }
+    options.onStop = function() { console.log("stopped"); window.location.reload(); }
 
     self.stream = new module.Stream(options);
 
