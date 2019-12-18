@@ -84,24 +84,8 @@ var MJPEG = (function(module) {
       return newRect;
     }
 
-    function convertImgToDataURLviaCanvas(url, callback){
-      var img = new Image();
-      img.crossOrigin = 'Anonymous';
-      img.onload = function(){
-         canvas = document.createElement('CANVAS');
-          var ctx = canvas.getContext('2d');
-          var dataURL;
-          canvas.height = this.height;
-          canvas.width = this.width;
-          ctx.drawImage(this, 0, 0);
-          dataURL = canvas.toDataURL("png");
-          callback(dataURL);
-          canvas = null;
-      };
-      img.src = url;
-    }
-
     function updateFrame(img) {
+        img.crossOrigin = 'Anonymous';
         var srcRect = {
           x: 0, y: 0,
           width: img.naturalWidth,
@@ -112,8 +96,7 @@ var MJPEG = (function(module) {
           height: canvas.height
         });
       try {
-            convertImgToDataURLviaCanvas(img, function(dataimg){
-              context.drawImage(dataimg,
+              context.drawImage(img,
                 srcRect.x,
                 srcRect.y,
                 srcRect.width,
@@ -123,7 +106,6 @@ var MJPEG = (function(module) {
                 dstRect.width,
                 dstRect.height
               );
-            });
         console.log(".");
       } catch (e) {
         // if we can't draw, don't bother updating anymore
@@ -133,7 +115,12 @@ var MJPEG = (function(module) {
       }
     }
 
-    self.start = function() { self.stream.start(); }
+    self.start = function() { 
+      self.stream.start(); 
+      var video = document.querySelector('video');
+      var stream = canvas.captureStream();
+      video.srcObject = stream;
+    }
     self.stop = function() { self.stream.stop(); }
   };
 
