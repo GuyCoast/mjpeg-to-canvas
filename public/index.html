@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Player</title>
+  </head>
+  <body>
+    <canvas id="player" style="background: #000;">
+      Your browser sucks.
+    </canvas>
+    <video autostart> </video>
+  </body>
+  <script src="public/mjpeg.js"></script>
+  <script>
+    var player = new MJPEG.Player("player", "http://127.0.0.1:1234/stream");
+    player.start();
+    setTimeout(function(){
+      var canvas = document.querySelector('canvas');
+      var video = document.querySelector('video');
+      var stream = canvas.captureStream(20);
+      video.srcObject = stream;
+    }, 2000);
+  </script>
+</html>
