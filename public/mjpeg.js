@@ -62,6 +62,7 @@ var MJPEG = (function(module) {
     options.url = url;
     options.onFrame = updateFrame;
     options.onStart = function() { console.log("started"); }
+    options.onError = function() { console.log("error"); }
     options.onStop = function() { console.log("stopped"); window.location.reload(); }
 
     self.stream = new module.Stream(options);
@@ -85,6 +86,7 @@ var MJPEG = (function(module) {
     }
 
     function updateFrame(img) {
+      data77 = img;
         img.crossOrigin = 'Anonymous';
         var srcRect = {
           x: 0, y: 0,
